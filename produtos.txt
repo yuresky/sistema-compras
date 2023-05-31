@@ -1,0 +1,24 @@
+Produto 1:
+ID: 001
+Nome: Camiseta básica
+Descrição: Camiseta unissex de algodão, disponível em várias cores.
+Preço: R$ 39,90
+
+Produto 2:
+ID: 002
+Nome: Smartphone X7
+Descrição: Smartphone com tela HD, processador octa-core e câmera de alta resolução.
+Preço: R$ 1.299,00
+
+Produto 3:
+ID: 003
+Nome: Calça cargo 
+Descrição: Calça cargo jeans, disponível na cor preta, branca e caramelo
+Preço: R$ 120,00
+
+Produto 4:
+ID: 004
+Nome: Vestido longo
+Descrição: Vestido longo de cetim, 
+disponível na cor vermelha, preta e azul
+Preço: R$ 150,00
