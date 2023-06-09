@@ -3,12 +3,54 @@
         "ID": 1,
         "Nome": "Smarthpone X7",
         "Descri\u00e7\u00e3o": "Um smartphone dos bacana",
-        "Pre\u00e7o": "1250.5"
+        "Pre\u00e7o": 1250.5
     },
     {
         "ID": 2,
         "Nome": "Mesa",
         "Descri\u00e7\u00e3o": "3456",
-        "Pre\u00e7o": "45346"
+        "Pre\u00e7o": 45346
+    },
+    {
+        "ID": 3,
+        "Nome": "Mouse",
+        "Descri\u00e7\u00e3o": "Um Mouse Dos Bacana",
+        "Pre\u00e7o": 2.5
+    },
+    {
+        "ID": 4,
+        "Nome": "Caneta",
+        "Descri\u00e7\u00e3o": "Uma Caneta Dos Bacana",
+        "Pre\u00e7o": 1
+    },
+    {
+        "ID": 5,
+        "Nome": "Livro",
+        "Descri\u00e7\u00e3o": "Um Livro Dos Bacana",
+        "Pre\u00e7o": 2
+    },
+    {
+        "ID": 6,
+        "Nome": "Copo",
+        "Descri\u00e7\u00e3o": "Um Copo Dos Bacana",
+        "Pre\u00e7o": 4
+    },
+    {
+        "ID": 7,
+        "Nome": "C\u00e3mera",
+        "Descri\u00e7\u00e3o": "Uma C\u00e2mera Dos Bacana",
+        "Pre\u00e7o": 3.0
+    },
+    {
+        "ID": 8,
+        "Nome": "Mousepad",
+        "Descri\u00e7\u00e3o": "Um Mousepad Dos Bacana",
+        "Pre\u00e7o": 27.8
+    },
+    {
+        "ID": 9,
+        "Nome": "Cabo C",
+        "Descri\u00e7\u00e3o": "Um Cabo C Dos Bacana",
+        "Pre\u00e7o": 3.0
     }
 ]

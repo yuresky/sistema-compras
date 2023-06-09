@@ -1,1 +1,13 @@
-{"Cliente": {"ID": "002", "Nome": " Maria Souza", "Telefone": " (21) 9876-5432", "E-mail": " maria.souza@12.com"}, "Forma de Pagamento": "PIX", "Data": "08/06/2034", "Valor Total": 0.0, "Itens": []}
+[
+    {
+        "ID": 1,
+        "ID Cliente": 10,
+        "Nome do cliente": "yuri",
+        "Forma de pagamento": "e",
+        "Data": "2",
+        "Valor Total": 45346.0,
+        "Produtos comprados": [
+            2
+        ]
+    }
+]

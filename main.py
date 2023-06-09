@@ -7,7 +7,7 @@ os.system('cls')
 import sys
 
 def menu():
-    print("======= Menu =======")
+    print("======= Menu (Tá errado, olhe as opções em elif escolhas) =======")
     print("1. Cadastrar")
     print("2. Cadastrar produto")
     print("3. Editar informações")
@@ -51,14 +51,27 @@ while opcao != 7:
         listar_produtos()
 
     elif escolha == 10:
-        realizar_compra()
+        cadastrar_compra()
 
-    elif escolha == 11:
-        exibir_compras()
-
+    # elif escolha == 11:
+    #     exibir_compras()
 
     elif escolha == 12:
         sys.exit()  # sair do programa
+
+    elif escolha == 13:
+        editar_compras()
+    
+    elif escolha == 14:
+        listar_compras()
+
+    elif escolha == 15:
+        relatorio()
+
+    elif escolha == 16:
+        excluir_compra()
+
+
 
 # Resto do código
 
