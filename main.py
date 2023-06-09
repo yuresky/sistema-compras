@@ -1,14 +1,10 @@
 from funcoes_sistema import *
-import json
 import os
 
 os.system('cls')
 
 #menu 1.0
 import sys
-
-lista_cadastro_clientes = []
-lista_cadastro_produtos = []
 
 def menu():
     print("======= Menu =======")
@@ -28,15 +24,40 @@ while opcao != 7:
     escolha = int(input("Informe qual será a operação: "))  # Converta a entrada para um número inteiro
 
     if escolha == 1:
-        cadastro_cliente(lista_cadastro_clientes)
+        cadastro_cliente()
     
     elif escolha == 2:
-        cadastro_produto(lista_cadastro_produtos)
+        cadastro_produto()
 
     elif escolha == 3:
         editar_cliente()
     
+    elif escolha == 4:
+        busca_cliente()
+
+    elif escolha == 5:
+        busca_cliente()
+    
+    elif escolha == 6:
+        editar_cliente()
+    
     elif escolha == 7:
+        excluir_cliente()
+        
+    elif escolha == 8:
+        listar_clientes()
+    
+    elif escolha == 9:
+        listar_produtos()
+
+    elif escolha == 10:
+        realizar_compra()
+
+    elif escolha == 11:
+        exibir_compras()
+
+
+    elif escolha == 12:
         sys.exit()  # sair do programa
 
 # Resto do código
@@ -45,18 +66,10 @@ while opcao != 7:
 
 #cadastrar_cliente()
 
-#Função que busca
-# with open("clientes.json","r") as arquivo:
-#     dados = json.load(arquivo)
-    
-#     for cliente in dados:
-#         print(cliente['Nome'])
-
-
-    # Obter informações do novo cliente
 
 # with open ("clientes.json", "r") as arquivo:
 #     clientes = json.load(arquivo)
 #     for cliente in clientes:
 #         nome = cliente["ID"]
 #         print (nome)
+
