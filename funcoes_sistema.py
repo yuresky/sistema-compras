@@ -44,6 +44,7 @@ def cadastro_produto():
 
         print("Produto cadastrado com sucesso!")
 
+        #O sistema pergunta se o usuário quer continuar cadastrando
         loop = input("Você quer continuar cadastrando novos produtos? [S/N]").upper()
         if loop == "N":
             break
@@ -207,11 +208,14 @@ def editar_produto():
 
 
 def excluir_compras_clientes(cliente_id):
+    #Abre o arquivo compras.json
     with open("compras.json", "r") as arquivo:
         compras = json.load(arquivo)
 
+    #List comprehseion! novas_compras recebe os valores de compra que tiverem o valor do id cliente diferente do que o usuário informou.
     novas_compras = [compra for compra in compras if compra["ID Cliente"] != cliente_id]
 
+    #Aqui ele verifica se de fato ocorreu a exclusão do dado verificando o tamnho das duas listas.
     if len(novas_compras) < len(compras):
         with open("compras.json", "w") as arquivo:
             json.dump(novas_compras, arquivo, indent=4)
@@ -220,21 +224,26 @@ def excluir_compras_clientes(cliente_id):
         print(f"Cliente com ID {cliente_id} não encontrado.")
 
 def excluir_produto():
+    #Abre o arquivo produtos.json
     with open("produtos.json", "r") as arquivo:
         produtos = json.load(arquivo)
 
+    #Para cada produto em produtos
     for produto in produtos:
         print(f"ID: {produto['ID']}, Nome: {produto['Nome']}")
 
     valor = int(input("Informe o ID do produto que você quer excluir: "))
 
+    #Abre o arquivo compras.json
     with open("compras.json", "r") as arquivo:
         compras = json.load(arquivo)
 
+    #Para cada compra em compras
     for compra in compras:
         if valor in compra["Produtos comprados"]:
             compra["Produtos comprados"].remove(valor)
 
+    #List comprehseion! novos_produtos recebe os valores de produto que tiverem o valor do id produto diferente do que o usuário informou.
     novos_produtos = [produto for produto in produtos if produto["ID"] != valor]
 
     if len(novos_produtos) < len(produtos):
@@ -257,6 +266,7 @@ def excluir_cliente():
 
     excluir_compras_clientes(valor)  # Chama a função para remover as compras do cliente
 
+    #List comprehseion! novos_clientes recebe os valores de cliente que tiverem o valor do id cliente diferente do que o usuário informou.
     novos_clientes = [cliente for cliente in clientes if cliente["ID"] != valor]
 
     if len(novos_clientes) < len(clientes):
