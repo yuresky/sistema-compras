@@ -107,12 +107,14 @@ def editar_cliente():
         print(f"ID: {cliente['ID']}, Nome: {cliente['Nome']}")
     
     # Solicitar ao usuário o ID do cliente que deseja editar
-    id_cliente = int(input("Digite o ID do cliente que deseja editar: "))
+    id_cliente = ''
+    while not id_cliente.strip() or id_cliente.isalpha():
+        id_cliente = input("Digite o ID do cliente que deseja editar: ")
     
     # Procurar o cliente com base no ID fornecido
     cliente_encontrado = None
     for cliente in clientes:
-        if cliente['ID'] == id_cliente:
+        if cliente['ID'] == int(id_cliente):
             cliente_encontrado = cliente
             break
     
@@ -166,13 +168,15 @@ def editar_produto():
         print(f"ID: {produto['ID']}, Nome: {produto['Nome']}")
     
     # Solicitar ao usuário o ID do cliente que deseja editar
-    id_produto = int(input("Digite o ID do produto que deseja editar: "))
+    id_produto = ''
+    while not id_produto.strip() or id_produto.isalpha():
+        id_produto = input("Digite o ID do produto que deseja editar: ")
     
     # Procurar o cliente com base no ID fornecido
     produto_encontrado = None
     for produto in produtos:
-        if produto['ID'] == id_produto:
-            cliente_encontrado = produto
+        if produto['ID'] == int(id_produto):
+            produto_encontrado= produto
             break
     
     # Verificar se o cliente foi encontrado
@@ -186,24 +190,24 @@ def editar_produto():
         nova_descricao = input("Digite a nova descrição do produto (ou deixe em branco para manter o valor atual): ")
 
         while not novo_preco.strip() or novo_preco.isalpha():
-            novo_preco = input("Digite o novo preço do produto (ou digite o preço antigo)\nPreço antigo: {produto['Preço']}\n: ")
+            novo_preco = input(f"Digite o novo preço do produto (ou digite o preço antigo)\nPreço antigo: {produto['Preço']}\n: ")
         
         # Atualizar as informações do cliente apenas se valores válidos foram fornecidos
         if novo_nome:
-            cliente_encontrado['Nome'] = novo_nome
+            produto_encontrado['Nome'] = novo_nome
         if nova_descricao:
-            cliente_encontrado['Telefone'] = nova_descricao
+            produto_encontrado['Descrição'] = nova_descricao
         if novo_preco:
-            cliente_encontrado['E-mail'] = novo_preco
+            produto_encontrado['Preço'] = novo_preco
         
 
         # Salvar as alterações no arquivo JSON
-        with open("clientes.json", "w") as arquivo:
+        with open("produtos.json", "w") as arquivo:
             json.dump(produtos, arquivo, indent=4)
         
-        print("Cliente atualizado com sucesso!")
+        print("Produto atualizado com sucesso!")
     else:
-        print("Cliente não encontrado.")
+        print("Produto não encontrado.")
     input("Digite alguma coisa para voltar ao menú: ")
 
 
@@ -213,7 +217,7 @@ def excluir_compras_clientes(cliente_id):
         compras = json.load(arquivo)
 
     #List comprehseion! novas_compras recebe os valores de compra que tiverem o valor do id cliente diferente do que o usuário informou.
-    novas_compras = [compra for compra in compras if compra["ID Cliente"] != cliente_id]
+    novas_compras = [compra for compra in compras if compra["ID Cliente"] != int(cliente_id)]
 
     #Aqui ele verifica se de fato ocorreu a exclusão do dado verificando o tamnho das duas listas.
     if len(novas_compras) < len(compras):
@@ -221,7 +225,7 @@ def excluir_compras_clientes(cliente_id):
             json.dump(novas_compras, arquivo, indent=4)
         print(f"Todas as compras do cliente com ID {cliente_id} foram excluídas.")
     else:
-        print(f"Cliente com ID {cliente_id} não encontrado.")
+        print(f"As compras do cliente com ID {cliente_id} não foram encontradas.")
 
 def excluir_produto():
     #Abre o arquivo produtos.json
@@ -232,7 +236,9 @@ def excluir_produto():
     for produto in produtos:
         print(f"ID: {produto['ID']}, Nome: {produto['Nome']}")
 
-    valor = int(input("Informe o ID do produto que você quer excluir: "))
+    valor = ''
+    while not valor.strip() or valor.isalpha():
+        valor = input("Informe o ID do produto que você quer excluir: ")
 
     #Abre o arquivo compras.json
     with open("compras.json", "r") as arquivo:
@@ -241,10 +247,10 @@ def excluir_produto():
     #Para cada compra em compras
     for compra in compras:
         if valor in compra["Produtos comprados"]:
-            compra["Produtos comprados"].remove(valor)
+            compra["Produtos comprados"].remove(int(valor))
 
     #List comprehseion! novos_produtos recebe os valores de produto que tiverem o valor do id produto diferente do que o usuário informou.
-    novos_produtos = [produto for produto in produtos if produto["ID"] != valor]
+    novos_produtos = [produto for produto in produtos if produto["ID"] != int(valor)]
 
     if len(novos_produtos) < len(produtos):
         with open("produtos.json", "w") as arquivo:
@@ -262,12 +268,14 @@ def excluir_cliente():
     for cliente in clientes:
         print(f"ID: {cliente['ID']}, Nome: {cliente['Nome']}")
 
-    valor = int(input("Informe o ID da pessoa que você quer excluir: "))
+    valor = ''
+    while not valor.strip() or valor.isalpha():
+        valor = input("Informe o ID da pessoa que você quer excluir: ")
 
-    excluir_compras_clientes(valor)  # Chama a função para remover as compras do cliente
+    excluir_compras_clientes(int(valor))  # Chama a função para remover as compras do cliente
 
     #List comprehseion! novos_clientes recebe os valores de cliente que tiverem o valor do id cliente diferente do que o usuário informou.
-    novos_clientes = [cliente for cliente in clientes if cliente["ID"] != valor]
+    novos_clientes = [cliente for cliente in clientes if cliente["ID"] != int(valor)]
 
     if len(novos_clientes) < len(clientes):
         with open("clientes.json", "w") as arquivo:
@@ -281,20 +289,23 @@ def excluir_cliente():
     
 
 def listar_clientes():
+    #Abre o arquivo json clientes
     with open('clientes.json') as arquivo:
         informacoes= json.load(arquivo)
         
+        #print pra deixar bonito
         print('\nInformações dos Clientes: \n ----------------------------------\n')
         for x in informacoes:
-        
+            #pra cada cliente ele vai imprimir as informações neste formato
             print (f'ID: {x["ID"]}\nNome: {x["Nome"]}\nTelefone: {x["Telefone"]}\nE-mail: {x["E-mail"]}')
             print("\n-----------------------------------\n")
     input("Digite algo para voltar ao menú: ")
 
 def listar_produtos():
+    #Abre o arquivo json clientes
     with open('produtos.json', encoding="utf-8") as arquivo:
         informacoes= json.load(arquivo)
-        
+        #pra cada produto ele vai imprimir as informações neste formato
         print('\nInformações dos produtos: \n ----------------------------------\n')
         for x in informacoes:
         
@@ -309,7 +320,8 @@ def cadastrar_compra():
         produtos = []
         clientes = []
         compras = []
-
+        #Abre os arquivos produtos, clientes e compras respectivamente
+        
         with open("produtos.json", "r", encoding="utf-8") as arquivo:
             produtos = json.load(arquivo)
 
@@ -321,20 +333,22 @@ def cadastrar_compra():
 
         print('\nInformações dos Clientes: \n ----------------------------------\n')
         for x in clientes:
-        
+        #imprime os valores de cada cliente
             print (f'ID: {x["ID"]}\nNome: {x["Nome"]}\nTelefone: {x["Telefone"]}\nE-mail: {x["E-mail"]}')
             print("\n-----------------------------------\n")
 
         cliente_encontrado = False
         cliente_selecionado = None
-
+        #pergunta o id do cliente para realizar a compra
         while not cliente_encontrado:
             codigo_cliente = input("Informe o código do cliente: ")
 
+            # Caso o id que o usuário digitar não for um número ou for um simples espaço, o sistema deve impedir.
             if not codigo_cliente.isdigit() or codigo_cliente.isspace():
                 print("Código do cliente inválido. Digite novamente.")
                 continue
 
+            #verificar se o cliente foi encontrado
             for cliente in clientes:
                 if cliente['ID'] == int(codigo_cliente):
                     cliente_encontrado = True
@@ -343,20 +357,19 @@ def cadastrar_compra():
 
         print('\nInformações dos produtos: \n ----------------------------------\n')
         for x in produtos:
-        
+        #printar informações dos produtos
             print (f'ID: {x["ID"]}\nNome: {x["Nome"]}\nDescrição: {x["Descrição"]}\nPreço: {x["Preço"]}')
             print("\n-----------------------------------\n")
 
-
+        #lista de produtos comprados
         produtos_comprados = []
-
         while True:
             codigo_produto = input("Informe o código do produto (ou 'sair' para encerrar a compra): ")
 
             if codigo_produto == 'sair':
                 break
-
-
+            
+            #Verificar se o id do cliente é um dígito e se não é um espaço
             if not codigo_produto.isdigit() or codigo_produto.isspace():
                 print("Código do produto inválido. Digite novamente.")
                 continue
@@ -377,13 +390,20 @@ def cadastrar_compra():
 
             produtos_comprados.append(produto_selecionado['ID'])
 
+        #Caso o usuário escrevr 'sair' sem ter colocado pelo menos um produto na compra
+        if not produtos_comprados:
+            print("Nenhum produto foi adicionado. Pelo menos um produto é necessário para cadastrar a compra.")
+            input("Tente Novamente!")
+            continue
+
+        #Verificar se a forma de pagamento digitada pelo usuário está cadstrada no sistema
         while True:
             forma_pagamento = input("Informe a forma de pagamento (PIX, dinheiro ou cartão): ").title()
             if forma_pagamento not in ["Pix", "Dinheiro", "Cartão"]:
                 print("Forma de pagamento inválida! Verifique se digitou corretamente.")
                 continue
             break
-
+        #Verifica a data fornecida pelo usuário utilizando a função verificar_data(presente nas ultimas linhas deste arquivo)
         while True:
             data = input("Informe a data da compra no formato (dia/mês/ano)\nOBS: Ano anterior a 2000 NÃO É VÁLIDO!\n: ")
             verificar_data(data)
@@ -392,7 +412,8 @@ def cadastrar_compra():
             else:
                 print("Data inválida!")
                 continue
-
+        
+        #Vê o preço
         valor_total = 0.0
 
         for produto_id in produtos_comprados:
@@ -419,7 +440,8 @@ def cadastrar_compra():
 
         print("Compra cadastrada com sucesso!")
 
-        loop = input("Você quer continuar cadastrando novas compras? [S/N]").upper()
+        #pergunta ao usuário se ele quer continuar realizanod novas compras
+        loop = input("Você quer continuar realizando novas compras? [S/N]").upper()
         if loop == "N":
             break
 
@@ -442,12 +464,14 @@ def editar_compras():
         print(f"ID: {compra['ID']}, Nome do cliente: {compra['Nome do cliente']}, Forma de pagamento: {compra['Forma de pagamento']}, Valor total: {compra['Valor Total']}")
     
     # Solicitar ao usuário o ID do cliente que deseja editar
-    id_compra = int(input("Digite o ID da compra que deseja editar: "))
+    id_compra = ''
+    while not id_compra.strip() or id_compra.isalpha():
+        id_compra = input("Digite o ID da compra que deseja editar: ")
     
     # Procurar o cliente com base no ID fornecido
     compra_encontrada = None
     for compra in compras:
-        if compra['ID'] == id_compra:
+        if compra['ID'] == int(id_compra):
             compra_encontrada = compra
             break
     
@@ -458,7 +482,8 @@ def editar_compras():
         nova_forma_pag = ""
         while not novo_nome.strip() or novo_nome.isdigit() or len(novo_nome.strip()) == 1 or len(novo_nome.replace(" ", "")) < 3:
             novo_nome = input(f"Digite o novo nome do cliente (ou digite o nome antigo para manter o valor atual)\nNome antigo: {compra_encontrada['Nome do cliente']}: ").title()
-        
+
+        #Verifica a data utilizanod a função "verificar_data"
         while True:
             nova_data = input(f"Informe a nova data da compra no formato (dia/mês/ano)\nOBS: Ano anterior a 2000 NÃO É VÁLIDO!\nCaso não queira mudar a data, repita a seguinte data {compra_encontrada['Data']}\n: ")
             verificar_data(nova_data)
@@ -468,7 +493,7 @@ def editar_compras():
             else:
                 print("Data inválida!")
                 continue
-
+        #Verifica a forma de pagamento
         while True:
             nova_forma_pag = input(f"Digite a nova forma de pagamento (ou digite a forma de pagamento anterior para não modificar)\nForma de pagamento anterior: {compra_encontrada['Forma de pagamento']}\n: ").title()
             if nova_forma_pag not in ["Pix", "Dinheiro", "Cartão"]:
@@ -507,9 +532,9 @@ def editar_compras():
 def listar_compras():
     with open('compras.json', encoding="utf-8") as arquivo:
         informacoes= json.load(arquivo)
-        
+
         print('\nInformações das compras: \n ----------------------------------\n')
-        for x in informacoes:
+        for x in informacoes: #Printa cada informação de compras
         
             print (f'ID: {x["ID"]}\nID do Cliente: {x["ID Cliente"]}\nNome do Cliente: {x["Nome do cliente"]}\nForma de Pagamento: {x["Forma de pagamento"]}\nData: {x["Data"]}\nValor: {x["Valor Total"]}\nID dos Produtos Comprados: {x["Produtos comprados"]}')
             print("\n-----------------------------------\n")
@@ -517,30 +542,50 @@ def listar_compras():
 
 
 def excluir_compra():
-    with open("clientes.json", "r") as arquivo:
-        clientes = json.load(arquivo)
+    with open("clientes.json", "r") as arquivo_clientes:
+        clientes = json.load(arquivo_clientes)
 
+    with open("compras.json", "r") as arquivo_compras:
+        compras = json.load(arquivo_compras)
+
+    # Imprime na tela cada cliente
     for cliente in clientes:
         print(f"ID: {cliente['ID']}, Nome: {cliente['Nome']}")
 
-    valor_cliente = int(input("Informe o ID do cliente: "))
+    #pergunta o id do cliente
+    valor_cliente = ""
+    while not valor_cliente.strip() or not valor_cliente.strip().isdigit():
+        valor_cliente = input("Informe o ID do cliente: ")
+    # CASO O ID FOR INVÁLIDO
+        if not valor_cliente.strip() or not valor_cliente.strip().isdigit():
+            print("ID do cliente inválido. Digite novamente.")
 
+
+    #Começa a verificação do  valor digitado pelo usuário e os valores existentes no arquivo compras 
     cliente_encontrado = False
     for cliente in clientes:
-        if cliente["ID"] == valor_cliente:
+        if cliente["ID"] == int(valor_cliente):
             cliente_encontrado = True
-            compras = cliente.get("compras", [])
-            if compras:
+            compras_cliente = [compra for compra in compras if compra["ID Cliente"] == int(valor_cliente)] #LIST COMPREHESON! cria uma nova lista com cada compra que for igual ao id cliente igual ao digitado pelo usuário
+            if compras_cliente:
                 print("Compras do cliente:")
-                for compra in compras:
-                    print(f"ID: {compra['ID']}, Descrição: {compra['Descrição']}")
+                for compra in compras_cliente: #aquele printzao formatado
+                    print(f"ID: {compra['ID']}\nNome do cliente: {compra['Nome do cliente']}")
                 
-                valor_compra = int(input("Informe o ID da compra que você deseja excluir: "))
-                compras = [compra for compra in compras if compra["ID"] != valor_compra]
+                valor_compra = ''
+                while not valor_compra.strip() or valor_compra.isalpha():
+                    valor_compra = int(input("Informe o ID da compra que você quer excluir: "))
 
-                cliente["compras"] = compras
-                with open("clientes.json", "w") as arquivo:
-                    json.dump(clientes, arquivo, indent=4)
+                compras_cliente = [compra for compra in compras_cliente if compra["ID"] != int(valor_compra)] #LIST COMPREHESION ! cria uma nova lista com cada compra que for DIFERENTE ao id cliente igual ao digitado pelo usuário
+
+                # Atualiza as compras do cliente no arquivo
+                for compra in compras:
+                    if compra["ID Cliente"] == valor_cliente:
+                        compra["compras"] = compras_cliente
+                        break
+
+                with open("compras.json", "w") as arquivo_compras:
+                    json.dump(compras, arquivo_compras, indent=4) #armazenando
                 
                 print(f"Compra com ID {valor_compra} do cliente com ID {valor_cliente} excluída com sucesso!")
             else:
@@ -553,6 +598,7 @@ def excluir_compra():
     input("Digite algo para voltar ao menu: ")
 
 def relatorio():
+    #Abrindo arquivos necessários (todos)
     with open('produtos.json', 'r') as arquivo:
         produtos = json.load(arquivo)
     with open('compras.json') as arquivo:
@@ -593,18 +639,19 @@ def relatorio():
         print('_______________________________')
         print('Total de compras por cliente: ')
         for compra in compras:
-            id_cliente = compra['ID Cliente']
-            contador_por_cliente[id_cliente] = contador_por_cliente.get(id_cliente, 0) + 1
+            id_cliente = compra['ID Cliente'] # Obtém o ID do cliente da compra
+            contador_por_cliente[id_cliente] = contador_por_cliente.get(id_cliente, 0) + 1 # Atualiza o contador de compras para o cliente
         for cliente in clientes:
             id_cliente = cliente['ID']
             nome_cliente = cliente['Nome']
-            total_compras = contador_por_cliente.get(id_cliente, 0)
+            total_compras = contador_por_cliente.get(id_cliente, 0) # Obtém o total de compras para o cliente (ou 0 se não houver)
             print('-----------------------------------------------------------')
             print(f"Cliente: {nome_cliente}, Total de compras: {total_compras}")
             print('-----------------------------------------------------------')
         return None
 
     def tot_compras_por_produto():
+        #Mesma coisa do tot_compras_por_cliente
         contador_por_produto = {}
         print('_______________________________')
         print('Total de compras por produto:\n')
@@ -614,7 +661,7 @@ def relatorio():
         for produto in produtos:
             produto_comprado = produto['ID']
             nome_produto = produto['Nome']
-            total_produtos_comprados = contador_por_produto.get(produto_comprado, 0)
+            total_produtos_comprados = contador_por_produto.get(produto_comprado, 0)# Obtém o total de compras por produto (ou 0 se não houver)
             print('-----------------------------------------------------------')
             print(f"Cliente: {nome_produto}, Total de compras: {total_produtos_comprados}")
             print('-----------------------------------------------------------')
@@ -626,7 +673,7 @@ def relatorio():
         print('Total de compras por forma de pagamento:')
         for compra in compras:
             forma_pagamento = compra['Forma de pagamento']
-            contador_por_forma_pagamento[forma_pagamento] = contador_por_forma_pagamento.get(forma_pagamento, 0) + 1
+            contador_por_forma_pagamento[forma_pagamento] = contador_por_forma_pagamento.get(forma_pagamento, 0) + 1 # Obtém o total de compras para o cliente (ou 0 se não houver)
         for forma_pagamento in contador_por_forma_pagamento:
             total_compras = contador_por_forma_pagamento[forma_pagamento]
             print('-----------------------------------------------------------')
@@ -658,8 +705,9 @@ def pesquisar_cliente():
     with open("clientes.json", "r") as arquivo:
         clientes = json.load(arquivo)
 
-
-    entrada = input("Informe o ID ou o nome do cliente: ")
+    for cliente in clientes:
+        print(f'ID {cliente["ID"]}, Nome: {cliente["Nome"]}')
+    entrada = input("Informe o ID ou o nome do cliente: \n")
 
     for cliente in clientes:
         if str(cliente["ID"]) == entrada or cliente["Nome"].lower() == entrada.lower():
@@ -675,8 +723,12 @@ def pesquisar_cliente():
 
 
 def pesquisar_produtos():
+    #Mesma coisa do pesquisar_clientes
     with open("produtos.json", "r") as arquivo:
         produtos = json.load(arquivo)
+    for produto in produtos:
+        print(f'ID {produto["ID"]}, Nome: {produto["Nome"]}')
+
 
     entrada = input("Informe o ID ou o nome do produto: ")
 
@@ -694,7 +746,8 @@ def pesquisar_produtos():
 def pesquisar_compra():
     with open("compras.json", "r") as arquivo:
         compras = json.load(arquivo)
-
+    for compra in compras:
+        print(f'ID{compra["ID"]}, Nome: {compra["Nome do cliente"]}')
     entrada = input("Informe o ID da compra: ")
 
     for compra in compras:
@@ -710,10 +763,12 @@ def pesquisar_compra():
 
 
 def valores_aproximados_clientes(x):
+    #Função para criar uma série de valores aproximados ao valor incorreto que o usuário forneceu.
     with open("clientes.json","r") as arquivo:
         clientes = json.load(arquivo)
     clientes_aproximados = []
 
+    #realiza a pesquisa baseado na primeira letra do valor digitado pelo usuário
     for cliente in clientes:
         if cliente['Nome'][0].lower() == x[0].lower():
             clientes_aproximados.append(cliente)
@@ -722,15 +777,17 @@ def valores_aproximados_clientes(x):
         print("Nenhum cliente encontrado.")
 
     elif len(clientes_aproximados) == 1:
-        print("Cliente encontrado:")
+        print("Clientes aproximados:")
         print((clientes_aproximados[0]))
 
     else:
+        #printa as informações da pesquisa
         print("Tente por:")
         for cliente in clientes_aproximados:
             print(f'Cliente: {cliente["Nome"]}')
 
 def valores_aproximados_produtos(x):
+    #mesma coisa do valores_aproximado_clientes
     with open("produtos.json","r") as arquivo:
         produtos = json.load(arquivo)
     produtos_aproximados = []
@@ -754,9 +811,9 @@ def valores_aproximados_produtos(x):
 def listar_comprasdata():
     with open('compras.json') as arquivo:
         informacoes= json.load(arquivo)
-    while True:
+    while True: 
         data = input('Informe a data na qual deseja listar as compras (dia/mês/ano):\n')
-        verificar_data(data)
+        verificar_data(data) #faz a vericação da data utilizando a função verificar_data
         if verificar_data(data):
             break
         else:
@@ -786,21 +843,22 @@ def listar_compraspag():
 
 
 def verificar_data(data):
+    #começa dividindo a data em 3 partes baseado no /
     partes_data = data.split('/')
-    if len(partes_data) != 3:
+    if len(partes_data) != 3: #se diferente que 3 ele vai retornar false e pedir dnv a data
+    #precisa ser igual a 3 pois é dis, mes e ano
         return False
 
     dia, mes, ano = partes_data
 
-    if not dia.isdigit() or not mes.isdigit() or not ano.isdigit():
+    if not dia.isdigit() or not mes.isdigit() or not ano.isdigit(): #verifica se os valores são digitos
         return False
 
     dia = int(dia)
     mes = int(mes)
     ano = int(ano)
 
-    if not (1 <= dia <= 31) or not (1 <= mes <= 12) or not (2000 <= ano <= 99999999):
+    if not (1 <= dia <= 31) or not (1 <= mes <= 12) or not (2000 <= ano <= 99999999): #verifica se os valores são dias presentes no calendário
         return False
 
     return True
-
