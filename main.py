@@ -1,16 +1,13 @@
 from funcoes_sistema import *
 import os
+import sys
 
 os.system('cls')
 
-#menu 1.0
-import sys
-
 def menu():
-    print("======= Menu (Tá errado, olhe as opções em elif escolhas) =======")
+    print("======= Menu =======")
     print("1. Cadastrar")
-    print("2. Cadastrar produto")
-    print("3. Editar informações")
+    print("2. Editar informações")
     print("3. Remover")
     print("4. Pesquisar")
     print("5. Listar")
@@ -18,71 +15,136 @@ def menu():
     print("7. Sair do programa")
     print("====================")
 
-opcao = 0
-while opcao != 7:
+opcao = ''
+while opcao != "7":
     menu()
-    escolha = int(input("Informe qual será a operação: "))  # Converta a entrada para um número inteiro
+    escolha = input("Informe qual será a operação: ")  # Converta a entrada para um número inteiro
 
-    if escolha == 1:
-        cadastro_cliente()
-    
-    elif escolha == 2:
-        cadastro_produto()
+    if escolha == "1":
+        while True:
+            print("=====================")
+            print("1. Cadastrar Cliente")
+            print("2. Cadastrar Produto")
+            print("3. Cadastrar Compra")
+            print("=====================")
+            
+            escolha_cadastro = input("Informe qual será a operação: ")
+            if escolha_cadastro == "1":
+                cadastro_cliente()
+            elif escolha_cadastro == "2":
+                cadastro_produto()
+            elif escolha_cadastro == "3":
+                cadastrar_compra()
+            else:
+                print("Opção inválida!")
+                continue
 
-    elif escolha == 3:
-        editar_cliente()
-    
-    elif escolha == 4:
-        busca_cliente()
+    elif escolha == "2":
+        while True:
+            print("=====================")
+            print("1. Editar informações do Cliente")
+            print("2. Editar informações do Produto")
+            print("3. Editar informações da Compra")
+            print("=====================")
 
-    elif escolha == 5:
-        busca_cliente()
-    
-    elif escolha == 6:
-        editar_cliente()
-    
-    elif escolha == 7:
-        excluir_cliente()
+            escolha_edicao = input("Informe qual será a operação: ")
+
+            if escolha_edicao == "1":
+                editar_cliente()
+            elif escolha_edicao == "2":
+                editar_produto()
+            elif escolha_edicao == "3":
+                editar_compras()
+            else:
+                print("Opção inválida!")
+                continue
+
+    elif escolha == "3":
+        while True:
+            print("=====================")
+            print("1. Remover Cliente")
+            print("2. Remover Produto")
+            print("3. Remover Compra")
+            print("=====================")
+
+            escolha_remocao = input("Informe qual será a operação: ")
+
+            if escolha_remocao == "1":
+                excluir_cliente()
+            elif escolha_remocao == "2":
+                excluir_produto()
+            elif escolha_remocao == "3":
+                excluir_compra()
+            else:
+                print("Opção inválida!")
+                continue
+
+    elif escolha == "4":
+        while True:
+            print("=====================")
+            print("1. Pesquisar Cliente")
+            print("2. Pesquisar Produto")
+            print("3. Pesquisar Compra")
+            print("=====================")
+
+            escolha_pesquisa = input("Informe qual será a operação: ")
+
+            if escolha_pesquisa == "1":
+                pesquisar_cliente()
+            elif escolha_pesquisa == "2":
+                pesquisar_produtos()
+            elif escolha_pesquisa == "3":
+                pesquisar_compra()
+            else:
+                print("Opção inválida!")
+                continue
+
+    elif escolha == "5":
+        while True:
+            print("=====================")
+            print("1. Listar Clientes")
+            print("2. Listar Produtos")
+            print("3. Listar Compras")
+            print("=====================")
+
+            escolha_listagem = input("Informe qual será a operação: ")
+
+            if escolha_listagem == "1":
+                listar_clientes()
+            elif escolha_listagem == "2":
+                listar_produtos()
+            elif escolha_listagem == "3":
+                while True:
+                    print("=====================")
+                    print("1. Listar Todas as Compras")
+                    print("2. Listar Compras por Data")
+                    print("3. Listar Compras por Forma de Pagamento")
+                    print("4. Voltar")
+                    print("=====================")
+                    escolha_compras = input("Informe qual será a operação: ")
+
+                    if escolha_compras == "1":
+                        listar_compras()
+                    elif escolha_compras == "2":
+                        listar_comprasdata()
+                    elif escolha_compras == "3":
+                        listar_compraspag()
+                    elif escolha_compras == "4":
+                        break  # Sai do loop interno e retorna ao loop principal
+                    else:
+                        print("Opção inválida!")
+                        continue
+            else:
+                print("Opção inválida!")
+                continue
+
+
+    elif escolha == "6":
+        relatorio()
         
-    elif escolha == 8:
-        listar_clientes()
-    
-    elif escolha == 9:
-        listar_produtos()
-
-    elif escolha == 10:
-        cadastrar_compra()
-
-    # elif escolha == 11:
-    #     exibir_compras()
-
-    elif escolha == 12:
+    elif escolha == "7":
+        print("Saindo do programa...")
         sys.exit()  # sair do programa
 
-    elif escolha == 13:
-        editar_compras()
-    
-    elif escolha == 14:
-        listar_compras()
-
-    elif escolha == 15:
-        relatorio()
-
-    elif escolha == 16:
-        excluir_compra()
-
-
-
-# Resto do código
-
-
-
-#cadastrar_cliente()
-
-
-# with open ("clientes.json", "r") as arquivo:
-#     clientes = json.load(arquivo)
-#     for cliente in clientes:
-#         nome = cliente["ID"]
-#         print (nome)
-
+    else:
+        print("Opção inválida!")

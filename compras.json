@@ -1,13 +1,37 @@
 [
     {
         "ID": 1,
-        "ID Cliente": 10,
-        "Nome do cliente": "yuri",
-        "Forma de pagamento": "e",
-        "Data": "2",
-        "Valor Total": 45346.0,
+        "ID Cliente": 7,
+        "Nome do cliente": "Breno Silva ",
+        "Forma de pagamento": "Pix",
+        "Data": "23/05/2021",
+        "Valor Total": 30.8,
         "Produtos comprados": [
-            2
+            9,
+            8
+        ]
+    },
+    {
+        "ID": 2,
+        "ID Cliente": 3,
+        "Nome do cliente": "Pedro Santos",
+        "Forma de pagamento": "Pix",
+        "Data": "12/12/2020",
+        "Valor Total": 7.0,
+        "Produtos comprados": [
+            6,
+            7
+        ]
+    },
+    {
+        "ID": 3,
+        "ID Cliente": 7,
+        "Nome do cliente": "Breno Silva ",
+        "Forma de pagamento": "Dinheiro",
+        "Data": "23/06/2202",
+        "Valor Total": 3.0,
+        "Produtos comprados": [
+            9
         ]
     }
 ]
